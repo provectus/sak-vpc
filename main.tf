@@ -30,7 +30,7 @@ module "vpc" {
   public_subnets  = local.public
 
   enable_nat_gateway = true
-  single_nat_gateway = true
+  single_nat_gateway = var.single_nat
 
   enable_dns_hostnames = true
   enable_dns_support   = true

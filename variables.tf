@@ -16,6 +16,12 @@ variable "network" {
   default     = "10"
 }
 
+variable "single_nat" {
+  type        = bool
+  description = "Use single Nat gateway or separeta for all AZ"
+  default     = true
+}
+
 variable "environment" {
   type        = string
   default     = null
