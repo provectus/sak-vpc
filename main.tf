@@ -32,6 +32,23 @@ module "vpc" {
   enable_nat_gateway = true
   single_nat_gateway = var.single_nat
 
+
+
+  enable_flow_log                                 = var.enable_flow_log
+  create_flow_log_cloudwatch_log_group            = var.enable_flow_log && var.flow_log_destination_arn == ""
+  create_flow_log_cloudwatch_iam_role             = var.enable_flow_log && var.flow_log_cloudwatch_iam_role_arn == ""
+  flow_log_cloudwatch_log_group_retention_in_days = var.flow_log_cloudwatch_log_group_retention_in_days
+  flow_log_traffic_type                           = var.flow_log_traffic_type
+  flow_log_destination_arn                        = (var.enable_flow_log && var.flow_log_destination_arn != "") ? var.flow_log_destination_arn : ""
+  flow_log_cloudwatch_iam_role_arn                = (var.enable_flow_log && var.flow_log_cloudwatch_iam_role_arn != "") ? var.flow_log_cloudwatch_iam_role_arn : ""
+  flow_log_cloudwatch_log_group_name_prefix       = var.flow_log_cloudwatch_log_group_name_prefix
+  vpc_flow_log_tags = {
+    Name        = "${var.environment}-${var.cluster_name}"
+    Environment = var.environment
+    Project     = var.project
+    Terraform   = "true"
+  }
+
   enable_dns_hostnames = true
   enable_dns_support   = true
 
