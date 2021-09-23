@@ -45,3 +45,15 @@ variable "availability_zones" {
   type        = list(any)
   default     = []
 }
+
+variable "additional_public_subnet_tags" {
+  type        = map(string)
+  default     = {}
+  description = "A value that will be added to default tags to public subnet"
+}
+
+variable "additional_private_subnet_tags" {
+  type        = map(string)
+  default     = {}
+  description = "A value that will be added to default tags to private subnet"
+}

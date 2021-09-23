@@ -7,14 +7,23 @@ VPC module for creating networks, load balancers and gateways
 - `Choice network CIDR` - change variable network to change CIDR (default 10.10.0.0/16)
 
 ## Usage
-```
+``` hcl
 module "network" {
   source = "https://github.com/provectus/sak-vpc.git"
 
-  availability_zones = var.availability_zones
-  environment        = local.environment
-  project            = local.project
-  cluster_name       = local.cluster_name
-  network            = 10
+  availability_zones             = var.availability_zones
+  environment                    = local.environment
+  project                        = local.project
+  cluster_name                   = local.cluster_name
+  network                        = 10
+  
+  additional_private_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}"   = "shared"
+    "kubernetes.io/role/internal-elb"               = ""
+  }
+  
+  additional_public_subnet_tags  = {
+      "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+  }
 }
 ```
