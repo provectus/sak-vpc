@@ -46,7 +46,7 @@ module "vpc" {
 
   private_subnet_tags = {
     Name                                        = "${var.environment}-${var.cluster_name}-private"
-    "kubernetes.io/role/elb-internal"           = "1"
+    "kubernetes.io/role/internal-elb"           = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 
