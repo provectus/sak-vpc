@@ -41,7 +41,6 @@ module "vpc" {
     Environment                                 = var.environment
     Project                                     = var.project
     "kubernetes.io/role/elb"                    = "1"
-    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
