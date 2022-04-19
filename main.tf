@@ -1,21 +1,11 @@
 locals {
   zones   = coalescelist(var.availability_zones, data.aws_availability_zones.available.names)
   cidr    = var.cidr != null ? var.cidr : "10.${var.network}.0.0/16"
-  private = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, i)] : data.template_file.private.*.rendered
-  public  = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, pow(2, var.network_delimiter) - i)] : data.template_file.public.*.rendered
+  private = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, i)] : [ for i, _ in local.zones : "10.${var.network}.20${i}.0/24" ]
+  public  = var.cidr != null ? [for i, z in local.zones : cidrsubnet(local.cidr, var.network_delimiter, pow(2, var.network_delimiter) - i)] : [ for i, _ in local.zones:"10.${var.network}.${i}.0/24" ]
 }
 
 data "aws_availability_zones" "available" {}
-
-data "template_file" "public" {
-  count    = length(local.zones)
-  template = "10.${var.network}.${count.index}.0/24"
-}
-
-data "template_file" "private" {
-  count    = length(local.zones)
-  template = "10.${var.network}.20${count.index}.0/24"
-}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
