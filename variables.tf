@@ -45,3 +45,49 @@ variable "availability_zones" {
   type        = list(any)
   default     = []
 }
+
+
+
+variable "enable_flow_log" {
+  description = "Enable flow logs"
+  type        = bool
+  default     = false
+}
+
+
+
+variable "flow_log_cloudwatch_log_group_retention_in_days" {
+  description = "Retention days cloudwatch logs"
+  type        = number
+  default     = 90
+}
+
+
+
+variable "flow_log_traffic_type" {
+  description = "Traffic type (ACCEPT, REJECT, ALL)"
+  type        = string
+  default     = "ALL"
+}
+
+
+
+variable "flow_log_destination_arn" {
+  description = "cloudwatch destination arn"
+  type        = string
+  default     = ""
+}
+
+
+variable "flow_log_cloudwatch_iam_role_arn" {
+  description = "Iam role to use to push to cloudwatch"
+  type        = string
+  default     = ""
+}
+
+
+variable "flow_log_cloudwatch_log_group_name_prefix" {
+  description = "cloudwatch log group prefix"
+  type        = string
+  default     = "/aws/vpc-flow-log/"
+}
